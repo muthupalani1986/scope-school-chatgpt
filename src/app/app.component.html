@@ -1,0 +1,6 @@
+<workflow-navbar></workflow-navbar>
+<workflow-toasts aria-live="polite" aria-atomic="true"></workflow-toasts>
+<div class="container-fluid">
+  <div class="loading" *ngIf="spinnerService.visibility | async">Loading</div>
+  <router-outlet></router-outlet>
+</div>

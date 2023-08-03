@@ -1,0 +1,53 @@
+/* You can add global styles to this file, and also import other style files */
+
+/* Importing Bootstrap SCSS file. */
+@import 'bootstrap/scss/bootstrap';
+@import 'bootstrap-icons/font/bootstrap-icons';
+@import url('loading.scss');
+.cus-mat-btn{
+  height: 48px !important;
+}
+.input-block,.cus-mat-btn-block{
+  width: 100% !important;
+}
+.separator {
+    display: flex;
+    align-items: center;
+    text-align: center;
+  }
+  
+  .separator::before,
+  .separator::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid #000;
+  }
+  
+  .separator:not(:empty)::before {
+    margin-right: .25em;
+  }
+  
+  .separator:not(:empty)::after {
+    margin-left: .25em;
+  }
+  
+  .login-container{
+    width: 350px;
+    .logo{
+        width:103px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+    .separator{
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+}
+@media (max-width: 575.98px) { 
+    .login-container{
+        width: 100%;
+    }
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

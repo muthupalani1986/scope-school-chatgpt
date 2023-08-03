@@ -1,0 +1,78 @@
+<div class="mx-auto login-container">
+    <div class="mx-auto logo">
+        <a routerLink="/login">
+            <img src="assets/workflow_logo.png" class="logo" alt="logo" />
+        </a>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <h1>Let’s get started</h1>
+            <form (ngSubmit)="onSubmit()" [formGroup]="registerForm" novalidate #form="ngForm" >
+                <div class="mb-2">
+                    <mat-form-field class="input-block">
+                        <mat-label>First name</mat-label>
+                        <input matInput formControlName="firstName">
+                        <mat-error *ngIf="firstName?.invalid">
+                            {{firstNameErrorMessage}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="mb-2">
+                    <mat-form-field class="input-block">
+                        <mat-label>Last name</mat-label>
+                        <input matInput formControlName="lastName">
+                        <mat-error *ngIf="lastName?.invalid">
+                            {{lastNameErrorMessage}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="mb-2">
+                    <mat-form-field class="input-block">
+                        <mat-label>State</mat-label>
+                        <mat-select formControlName="state">
+                            <mat-option [value]="item.abbreviation"
+                                *ngFor="let item of states">{{item.name}}</mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="state?.invalid">
+                            {{stateErrorMessage}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="mb-2">
+                    <mat-form-field class="input-block">
+                        <mat-label>Email</mat-label>
+                        <input matInput formControlName="email">
+                        <mat-error *ngIf="email?.invalid">
+                            {{emailErrorMessage}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="mb-2">
+                    <mat-form-field class="input-block">
+                        <mat-label>Password</mat-label>
+                        <input matInput formControlName="password" type="password">
+                        <mat-hint>At least 8 characters</mat-hint>
+                        <mat-error *ngIf="password?.invalid">
+                            {{passwordErrorMessage}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="mb-2">
+                    <mat-checkbox formControlName="privacy">By checking this box I agree that I have read, understood, and consent to WorkFlow ESIGN
+                        Act Consent, opens in new window, GLBA Privacy Notice, opens in new window, Terms of Use, opens
+                        in new window, and Arbitration Agreement.</mat-checkbox>
+                        <div class="mat-mdc-form-field-subscript-wrapper">
+                            <mat-error *ngIf="privacy?.dirty && !privacy?.value||form.submitted && !privacy?.value">
+                                You must agree to the consents
+                            </mat-error>
+                        </div>
+                </div>
+                <div class="d-grid">    
+                    <button mat-raised-button color="primary" class="cus-mat-btn" type="submit">Submit</button>
+                </div>
+            </form>
+            <hr />
+            <p>Already have an account? <a routerLink="/login">Sign in</a></p>
+        </div>
+    </div>
+</div>

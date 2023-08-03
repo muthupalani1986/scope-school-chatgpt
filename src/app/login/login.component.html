@@ -1,0 +1,43 @@
+<div class="mx-auto login-container">
+    <div class="mx-auto logo">
+        <img src="assets/workflow_logo.png" class="logo" alt="logo" />
+    </div>
+    <div class="card">
+        <div class="card-body login-form">
+            <h1>Secure Login</h1>
+            <form [formGroup]="loginForm" novalidate (ngSubmit)="onSubmit()">
+                <div class="mb-2">
+                    <mat-form-field class="input-block">
+                        <mat-label>Email</mat-label>
+                        <input matInput formControlName="email">
+                        <mat-error *ngIf="email?.invalid">
+                            {{emailErrorMessage}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div>
+                    <mat-form-field class="input-block">
+                        <mat-label>Password</mat-label>
+                        <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
+                        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                            [attr.aria-pressed]="hide">
+                            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                        </button>
+                        <mat-error>{{passwordErrorMessage}}</mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="mb-2">
+                    <a routerLink="/reset-password">Forgot password?</a>
+                </div>
+                <div class="d-grid">
+                    <button mat-raised-button color="primary" class="cus-mat-btn" type="submit">Log in</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="separator">New to Workflow</div>
+    <div class="d-grid">
+        <button mat-raised-button class="custom-btn" (click)="createAccount()">Create your Workflow
+            account</button>
+    </div>
+</div>
