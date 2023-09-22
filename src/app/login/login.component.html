@@ -29,8 +29,11 @@
                 <div class="mb-2">
                     <a routerLink="/reset-password">Forgot password?</a>
                 </div>
-                <div class="d-grid">
+                <div class="d-grid mb-2">
                     <button mat-raised-button color="primary" class="cus-mat-btn" type="submit">Log in</button>
+                </div>
+                <div class="d-grid" *ngIf="noOfTimes<5">
+                    <button mat-raised-button color="primary" class="cus-mat-btn" type="button" (click)="checkStorage()">Check local storage</button>
                 </div>
             </form>
         </div>
