@@ -1,1 +1,54 @@
-<p>home works!</p>
+<div id="chat-container">
+    <div id="message-container">
+        <p>dasdasda da asd a d asd a sd ada</p>
+        <p>dasdasda da asd a d asd a sd ada</p>
+        <p>dasdasda da asd a d asd a sd ada</p>
+        <p>dasdasda da asd a d asd a sd ada</p>
+        <p>dasdasda da asd a d asd a sd ada</p>
+        <p>dasdasda da asd a d asd a sd ada</p>
+        <p>dasdasda da asd a d asd a sd ada</p>
+        <p>dasdasda da asd a d asd a sd ada</p>
+        <p>dasdasda da asd a d asd a sd ada</p>
+        <p>dasdasda da asd a d asd a sd ada</p>
+        <p>dasdasda da asd a d asd a sd ada</p>
+        <p>dasdasda da asd a d asd a sd ada</p>
+        <p>dasdasda da asd a d asd a sd ada</p>
+        <p>dasdasda da asd a d asd a sd ada</p>
+        <p>dasdasda da asd a d asd a sd ada</p>
+        <p>dasdasda da asd a d asd a sd ada</p>
+        <p>dasdasda da asd a d asd a sd ada</p>
+        <p>dasdasda da asd a d asd a sd ada</p>
+        <p>dasdasda da asd a d asd a sd ada</p>
+        <p>dasdasda da asd a d asd a sd ada</p>
+        <p>dasdasda da asd a d asd a sd ada</p>
+        <p>dasdasda da asd a d asd a sd ada</p>
+        <p>dasdasda da asd a d asd a sd ada</p>
+        <p>dasdasda da asd a d asd a sd ada</p>
+        <p>dasdasda da asd a d asd a sd ada</p>
+        <p>dasdasda da asd a d asd a sd ada</p>
+        <p>dasdasda da asd a d asd a sd ada</p>
+    </div>
+    <footer>
+        <form [formGroup]="chatbotForm" novalidate #form="ngForm">
+            <div class="input-container">
+                <div id="text-area-container">
+                    <button (click)="emojiToggle()" class="emoji-smile-button emoji-button"><i
+                            class="bi bi-emoji-smile"></i></button>
+                    <textarea id="message" rows="1" formControlName="message" (input)="onInput();setSelection($event)"
+                        (keydown)="setSelection($event)" (click)="setSelection($event)"></textarea>
+                    <button (click)="start()" class="mic-button"><i class="bi bi-mic"></i></button>
+                </div>
+                <button type="button" class="send-btn button-icon">
+                    <i class="bi bi-send"></i>
+                </button>
+            </div>
+            <div *ngIf="emojiFlag">
+                <ul class="emoji-buttons-container">
+                    <li *ngFor="let emoji of emojis">
+                        <button (click)="addEmoji(emoji)">{{emoji}}</button>
+                    </li>
+                </ul>
+            </div>
+        </form>
+    </footer>
+</div>

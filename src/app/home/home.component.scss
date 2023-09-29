@@ -1,0 +1,73 @@
+#chat-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+#message-container {
+  flex: 1;
+  overflow: auto;
+  padding:10px;
+}
+.input-container{
+  display: flex;
+  padding: 10px;
+  column-gap: 5px;
+  align-items: flex-end;
+}
+
+#text-area-container{
+  flex:1;
+  position: relative;
+}
+#message {
+  resize: none;
+  border-radius: 50px;
+  padding: 5px 24px 5px 28px;
+  width: 100%;
+}
+
+.emoji-smile-button{
+  position: absolute;
+  bottom: 11px;
+  left:11px;
+  cursor: pointer;
+}
+.emoji-buttons-container{
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  column-gap: 5px;
+  padding: 0 10px 10px 10px;
+}
+.emoji-buttons-container button,.emoji-button{
+  padding: 0;
+  margin: 0;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+.bi-emoji-smile{
+  cursor: pointer;
+}
+.mic-button{
+  position: absolute;
+  padding: 0;
+  margin: 0;
+  background: none;
+  border:0;
+  bottom: 11px;
+  right: 11px;
+}
+.button-icon{
+  padding: 0;
+  margin: 0;
+  background: none;
+  border:0;
+  position: relative;
+  bottom: 10px;
+}
+.send-btn{
+  
+}
