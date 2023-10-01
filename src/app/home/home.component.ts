@@ -4,6 +4,9 @@ import { VoiceRecognitionService } from '../shared/services/voice/voice-recognit
 import { Subscriber, Subscription } from 'rxjs';
 import { Message } from './interfaces/message.interface';
 import { ActivatedRoute } from '@angular/router';
+import * as _ from 'lodash';
+import * as moment from 'moment';
+import { LocalStorageService } from '../shared/services/storage/local-storage.service';
 
 @Component({
   selector: 'workflow-home',
@@ -19,70 +22,19 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
   public speechToTextSubs!: Subscription;
   public messages!: Message[];
   public animal!: string;
+  public storageKeyName!: string;
+
   @ViewChild('scrollMe') private myScrollContainer!: ElementRef;
   constructor(private _formBuilder: FormBuilder,
     private _voiceRecognitionService: VoiceRecognitionService,
-    private _activatedRoute: ActivatedRoute) {
+    private _activatedRoute: ActivatedRoute,
+    private _localStorageService: LocalStorageService) {
     this._voiceRecognitionService.init();
   }
   ngOnInit(): void {
-    this.messages = [{
-      "message": "Hi Muthu, I am Cat, You can ask anything about me. I will share with you", "messageType": "bot"
-    },
-    { "message": "What is your name?", "messageType": "user" },
-    { "message": "Humans called my name is cat", "messageType": "bot" },{
-      "message": "Hi Muthu, I am Cat, You can ask anything about me. I will share with you", "messageType": "bot"
-    },
-    { "message": "What is your name?", "messageType": "user" },
-    { "message": "Humans called my name is cat", "messageType": "bot" },{
-      "message": "Hi Muthu, I am Cat, You can ask anything about me. I will share with you", "messageType": "bot"
-    },
-    { "message": "What is your name?", "messageType": "user" },
-    { "message": "Humans called my name is cat", "messageType": "bot" },{
-      "message": "Hi Muthu, I am Cat, You can ask anything about me. I will share with you", "messageType": "bot"
-    },
-    { "message": "What is your name?", "messageType": "user" },
-    { "message": "Humans called my name is cat", "messageType": "bot" },{
-      "message": "Hi Muthu, I am Cat, You can ask anything about me. I will share with you", "messageType": "bot"
-    },
-    { "message": "What is your name?", "messageType": "user" },
-    { "message": "Humans called my name is cat", "messageType": "bot" },{
-      "message": "Hi Muthu, I am Cat, You can ask anything about me. I will share with you", "messageType": "bot"
-    },
-    { "message": "What is your name?", "messageType": "user" },
-    { "message": "Humans called my name is cat", "messageType": "bot" },{
-      "message": "Hi Muthu, I am Cat, You can ask anything about me. I will share with you", "messageType": "bot"
-    },
-    { "message": "What is your name?", "messageType": "user" },
-    { "message": "Humans called my name is cat", "messageType": "bot" },{
-      "message": "Hi Muthu, I am Cat, You can ask anything about me. I will share with you", "messageType": "bot"
-    },
-    { "message": "What is your name?", "messageType": "user" },
-    { "message": "Humans called my name is cat", "messageType": "bot" },{
-      "message": "Hi Muthu, I am Cat, You can ask anything about me. I will share with you", "messageType": "bot"
-    },
-    { "message": "What is your name?", "messageType": "user" },
-    { "message": "Humans called my name is cat", "messageType": "bot" },{
-      "message": "Hi Muthu, I am Cat, You can ask anything about me. I will share with you", "messageType": "bot"
-    },
-    { "message": "What is your name?", "messageType": "user" },
-    { "message": "Humans called my name is cat", "messageType": "bot" },{
-      "message": "Hi Muthu, I am Cat, You can ask anything about me. I will share with you", "messageType": "bot"
-    },
-    { "message": "What is your name?", "messageType": "user" },
-    { "message": "Humans called my name is cat", "messageType": "bot" },{
-      "message": "Hi Muthu, I am Cat, You can ask anything about me. I will share with you", "messageType": "bot"
-    },
-    { "message": "What is your name?", "messageType": "user" },
-    { "message": "Humans called my name is cat", "messageType": "bot" },{
-      "message": "Hi Muthu, I am Cat, You can ask anything about me. I will share with you", "messageType": "bot"
-    },
-    { "message": "What is your name?", "messageType": "user" },
-    { "message": "Humans called my name is cat", "messageType": "bot" },{
-      "message": "Hi Muthu, I am Cat, You can ask anything about me. I will share with you", "messageType": "bot"
-    },
-    { "message": "What is your name?", "messageType": "user" },
-    { "message": "Humans called my name is cat", "messageType": "bot" }];
+    this.storageKeyName = moment().format('YYYY-MM-DD');
+    this.messages = JSON.parse(this._localStorageService.getItem(this.storageKeyName)) || [];
+    this.messages = [...this.messages,{"message":"This is bot message","messageType":"bot"}];
     this.animal = this._activatedRoute.snapshot.queryParamMap.get('animal') || 'cat';
     this.chatbotForm = this._formBuilder.group({
       message: ['', [Validators.required]]
@@ -134,8 +86,10 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
         message: this.chatbotForm.get('message')?.value
       }
       this.messages.push(message);
+      this._localStorageService.setItem(this.storageKeyName,JSON.stringify(this.messages));
       this.chatbotForm.reset();
     }
+
   }
   ngAfterViewChecked() {
     this.scrollToBottom();
