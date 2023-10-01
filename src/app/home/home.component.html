@@ -1,44 +1,31 @@
 <div id="chat-container">
-    <div id="message-container">
-        <p>dasdasda da asd a d asd a sd ada</p>
-        <p>dasdasda da asd a d asd a sd ada</p>
-        <p>dasdasda da asd a d asd a sd ada</p>
-        <p>dasdasda da asd a d asd a sd ada</p>
-        <p>dasdasda da asd a d asd a sd ada</p>
-        <p>dasdasda da asd a d asd a sd ada</p>
-        <p>dasdasda da asd a d asd a sd ada</p>
-        <p>dasdasda da asd a d asd a sd ada</p>
-        <p>dasdasda da asd a d asd a sd ada</p>
-        <p>dasdasda da asd a d asd a sd ada</p>
-        <p>dasdasda da asd a d asd a sd ada</p>
-        <p>dasdasda da asd a d asd a sd ada</p>
-        <p>dasdasda da asd a d asd a sd ada</p>
-        <p>dasdasda da asd a d asd a sd ada</p>
-        <p>dasdasda da asd a d asd a sd ada</p>
-        <p>dasdasda da asd a d asd a sd ada</p>
-        <p>dasdasda da asd a d asd a sd ada</p>
-        <p>dasdasda da asd a d asd a sd ada</p>
-        <p>dasdasda da asd a d asd a sd ada</p>
-        <p>dasdasda da asd a d asd a sd ada</p>
-        <p>dasdasda da asd a d asd a sd ada</p>
-        <p>dasdasda da asd a d asd a sd ada</p>
-        <p>dasdasda da asd a d asd a sd ada</p>
-        <p>dasdasda da asd a d asd a sd ada</p>
-        <p>dasdasda da asd a d asd a sd ada</p>
-        <p>dasdasda da asd a d asd a sd ada</p>
-        <p>dasdasda da asd a d asd a sd ada</p>
+    <div #scrollMe  id="message-container">
+        <ng-container *ngFor="let item of messages">
+            <ng-container *ngIf="item.messageType==='bot'; else userMessage">
+                <div class="bot-msg-container">
+                    <div><img src="assets/images/{{animal}}.jpg" class="animal-picture"/></div>
+                    <div class="message-container">{{item.message}}</div>
+                    <div class="share-icon-container"><button class="button-icon"><i class="bi bi-share"></i></button></div>
+                </div>
+            </ng-container>
+            <ng-template #userMessage>
+                <div class="user-msg-container">
+                    {{item.message}}
+                </div>
+            </ng-template>
+        </ng-container>
     </div>
     <footer>
-        <form [formGroup]="chatbotForm" novalidate #form="ngForm">
+        <form (ngSubmit)="sendMessage()" [formGroup]="chatbotForm" novalidate #form="ngForm">
             <div class="input-container">
                 <div id="text-area-container">
                     <button (click)="emojiToggle()" class="emoji-smile-button emoji-button"><i
                             class="bi bi-emoji-smile"></i></button>
                     <textarea id="message" rows="1" formControlName="message" (input)="onInput();setSelection($event)"
                         (keydown)="setSelection($event)" (click)="setSelection($event)"></textarea>
-                    <button (click)="start()" class="mic-button"><i class="bi bi-mic"></i></button>
+                    <button (click)="start()" class="mic-button" type="button"><i class="bi bi-mic"></i></button>
                 </div>
-                <button type="button" class="send-btn button-icon">
+                <button type="submit" class="send-btn button-icon">
                     <i class="bi bi-send"></i>
                 </button>
             </div>
