@@ -83,7 +83,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
     if (this.chatbotForm.valid) {
       const message: Message = {
         messageType: 'user',
-        message: this.chatbotForm.get('message')?.value
+        message: this.chatbotForm.get('message')?.value.replace(/(?:\r\n|\r|\n)/g, '<br>')
       }
       this.messages.push(message);
       this._localStorageService.setItem(this.storageKeyName, JSON.stringify(this.messages));

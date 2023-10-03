@@ -4,14 +4,12 @@
             <ng-container *ngIf="item.messageType==='bot'; else userMessage">
                 <div class="bot-msg-container">
                     <div><img src="assets/images/{{animal}}.jpg" class="animal-picture"/></div>
-                    <div class="message-container">{{item.message}}</div>
+                    <div class="message-container" [innerHTML]="item.message"></div>
                     <div class="share-icon-container"><button class="button-icon" (click)="share(item.message)"><i class="bi bi-share"></i></button></div>
                 </div>
             </ng-container>
             <ng-template #userMessage>
-                <div class="user-msg-container">
-                    {{item.message}}
-                </div>
+                <div class="user-msg-container" [innerHTML]="item.message"></div>
             </ng-template>
         </ng-container>
     </div>
