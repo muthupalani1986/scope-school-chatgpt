@@ -34,7 +34,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
   ngOnInit(): void {
     this.storageKeyName = moment().format('YYYY-MM-DD');
     this.messages = JSON.parse(this._localStorageService.getItem(this.storageKeyName)) || [];
-    this.messages = [...this.messages,{"message":"This is bot message","messageType":"bot"}];
+    this.messages = [...this.messages, { "message": "This is bot message", "messageType": "bot" }];
     this.animal = this._activatedRoute.snapshot.queryParamMap.get('animal') || 'cat';
     this.chatbotForm = this._formBuilder.group({
       message: ['', [Validators.required]]
@@ -86,7 +86,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
         message: this.chatbotForm.get('message')?.value
       }
       this.messages.push(message);
-      this._localStorageService.setItem(this.storageKeyName,JSON.stringify(this.messages));
+      this._localStorageService.setItem(this.storageKeyName, JSON.stringify(this.messages));
       this.chatbotForm.reset();
     }
 
@@ -99,7 +99,18 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
       this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
     } catch (err) { }
   }
-
+  share(message: string) {
+    const shareData = {
+      title: "Scope School",
+      text: message,
+      url: window.location.href
+    };
+    try {
+      navigator.share(shareData);
+    } catch (err) {
+      console.log(err);
+    }
+  }
   ngOnDestroy(): void {
     this.speechToTextSubs.unsubscribe();
   }

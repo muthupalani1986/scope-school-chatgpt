@@ -5,7 +5,7 @@
                 <div class="bot-msg-container">
                     <div><img src="assets/images/{{animal}}.jpg" class="animal-picture"/></div>
                     <div class="message-container">{{item.message}}</div>
-                    <div class="share-icon-container"><button class="button-icon"><i class="bi bi-share"></i></button></div>
+                    <div class="share-icon-container"><button class="button-icon" (click)="share(item.message)"><i class="bi bi-share"></i></button></div>
                 </div>
             </ng-container>
             <ng-template #userMessage>
