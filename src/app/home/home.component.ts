@@ -110,6 +110,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
       choices.forEach((item: any) => {
         this.messages.push(item.message);
       });
+      this._localStorageService.setItem(this.storageKeyName, JSON.stringify(this.messages));
     }, (err) => {
       this.chatSpinner = false;
     });

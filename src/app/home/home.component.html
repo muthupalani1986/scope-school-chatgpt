@@ -27,7 +27,7 @@
                         (keydown)="setSelection($event)" (click)="setSelection($event)"></textarea>
                     <button (click)="start()" class="mic-button" type="button"><i class="bi bi-mic"></i></button>
                 </div>
-                <button type="submit" class="send-btn button-icon">
+                <button type="submit" class="send-btn button-icon" [disabled]="messages.length>=10">
                     <i class="bi bi-send"></i>
                 </button>
             </div>
