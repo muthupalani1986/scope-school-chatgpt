@@ -48,6 +48,14 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
         message
       });
     });
+    if (this.messages.length === 0) {
+      const message: Message = {
+        role: '',
+        content: '',
+        initialLoad: true
+      }
+      this.askChatGpt(message);
+    }
     this.scrollToBottom();
   }
   public emojiToggle() {
@@ -83,7 +91,6 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
   }
   public sendMessage() {
     if (this.chatbotForm.valid) {
-      this.chatSpinner = true;
       const message: Message = {
         role: 'user',
         content: this.chatbotForm.get('message')?.value.replace(/(?:\r\n|\r|\n)/g, '<br>')
@@ -91,17 +98,21 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
       this.messages.push(message);
       this._localStorageService.setItem(this.storageKeyName, JSON.stringify(this.messages));
       this.chatbotForm.reset();
-      this.chatGptSubs = this._chatGptService.askChatGpt(this.animalName, message).subscribe((response) => {
-        this.chatSpinner = false;
-        const choices = _.get(response, 'choices', []);
-        choices.forEach((item: any) => {
-          this.messages.push(item.message);
-        });
-      }, (err) => {
-        this.chatSpinner = false;
-      });
+      this.askChatGpt(message);
     }
 
+  }
+  private askChatGpt(message: Message) {
+    this.chatSpinner = true;
+    this.chatGptSubs = this._chatGptService.askChatGpt(this.animalName, message).subscribe((response) => {
+      this.chatSpinner = false;
+      const choices = _.get(response, 'choices', []);
+      choices.forEach((item: any) => {
+        this.messages.push(item.message);
+      });
+    }, (err) => {
+      this.chatSpinner = false;
+    });
   }
   ngAfterViewChecked() {
     this.scrollToBottom();
