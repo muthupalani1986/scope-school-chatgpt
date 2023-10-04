@@ -1,4 +1,4 @@
 export interface Message {
-    messageType:string;
-    message:string;
+    role:string;
+    content:string;
 }

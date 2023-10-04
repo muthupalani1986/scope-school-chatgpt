@@ -15,14 +15,14 @@ export class CustomHttpInterceptor implements HttpInterceptor {
   constructor(private _spinnerService: SpinnerService) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    this._spinnerService.show();
+    //this._spinnerService.show();
     return next.handle(req)
       .pipe(tap((event: HttpEvent<any>) => {
         if (event instanceof HttpResponse) {
-          this._spinnerService.hide();
+          //this._spinnerService.hide();
         }
       }, (error) => {
-        this._spinnerService.hide();
+        //this._spinnerService.hide();
       }));
   }
 }

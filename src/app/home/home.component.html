@@ -1,17 +1,21 @@
 <div id="chat-container">
-    <div #scrollMe  id="message-container">
+    <div #scrollMe id="message-container">
         <ng-container *ngFor="let item of messages">
-            <ng-container *ngIf="item.messageType==='bot'; else userMessage">
+            <ng-container *ngIf="item.role==='assistant'; else userMessage">
                 <div class="bot-msg-container">
-                    <div><img src="assets/images/{{animal}}.jpg" class="animal-picture"/></div>
-                    <div class="message-container" [innerHTML]="item.message"></div>
-                    <div class="share-icon-container"><button class="button-icon" (click)="share(item.message)"><i class="bi bi-share"></i></button></div>
+                    <div><img src="assets/images/{{this.animalName}}.jpg" class="animal-picture" /></div>
+                    <div class="message-container" [innerHTML]="item.content"></div>
+                    <div class="share-icon-container"><button class="button-icon" (click)="share(item.content)"><i
+                                class="bi bi-share"></i></button></div>
                 </div>
             </ng-container>
             <ng-template #userMessage>
-                <div class="user-msg-container" [innerHTML]="item.message"></div>
+                <div class="user-msg-container" [innerHTML]="item.content"></div>
             </ng-template>
         </ng-container>
+        <div id="loading" *ngIf="chatSpinner">
+            <div class="dot-collision"></div>
+        </div>
     </div>
     <footer>
         <form (ngSubmit)="sendMessage()" [formGroup]="chatbotForm" novalidate #form="ngForm">
