@@ -30,7 +30,9 @@
                 </div>
             </ng-container>
             <ng-template #userMessage>
-                <div class="user-msg-container" [innerHTML]="item.content"></div>
+                <div class="user-msg-container">
+                    <div [innerHTML]="item.content" class="user-msg-box"></div>
+                </div>
             </ng-template>
         </ng-container>
         <div id="loading" *ngIf="chatSpinner">
