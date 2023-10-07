@@ -28,6 +28,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
   private chatGptSubs!: Subscription;
   public chatSpinner = false;
   speech: any;
+  language!:string;
   @ViewChild('scrollMe') private myScrollContainer!: ElementRef;
   constructor(private _formBuilder: FormBuilder,
     private _voiceRecognitionService: VoiceRecognitionService,

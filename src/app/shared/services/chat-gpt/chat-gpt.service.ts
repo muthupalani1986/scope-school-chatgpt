@@ -3,6 +3,8 @@ import { CHAT_GPT } from '../../constants/chat-gpt.constant';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Message } from 'src/app/home/interfaces/message.interface';
 import * as _ from 'lodash';
+import { ActivatedRoute } from '@angular/router';
+import { LANGUAGE_CONTENT } from '../../constants/language-content.contants';
 const headers = new HttpHeaders({
   'Content-Type': 'application/json',
   'Authorization': `Bearer ${CHAT_GPT.API_KEY}`
@@ -12,14 +14,17 @@ const headers = new HttpHeaders({
 })
 export class ChatGptService {
 
-  constructor(private _httpClient: HttpClient) { }
+  constructor(private _httpClient: HttpClient,
+    private _activatedRoute: ActivatedRoute) { }
   askChatGpt(animalName: string, message: Message) {
+    const lang = this._activatedRoute.snapshot.queryParamMap.get('lang') || '';
+    const langContent = _.get(LANGUAGE_CONTENT, lang, '');
     const payload = {
       "model": "gpt-3.5-turbo",
       "messages": [
         {
           "role": "user",
-          "content": "Respond as " + animalName
+          "content": "Respond as " + animalName +' '+langContent
         }
       ]
     }

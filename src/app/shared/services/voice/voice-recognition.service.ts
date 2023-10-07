@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs';
-
+import * as _ from 'lodash';
+import { LANGUAGE_TAGS } from '../../constants/language-tags.constant';
 
 declare var webkitSpeechRecognition: any;
 
@@ -12,13 +14,15 @@ export class VoiceRecognitionService {
   recognition = new webkitSpeechRecognition();
   isStoppedSpeechRecog = false;
   public text = '';
-  tempWords: any
-  constructor() { }
+  tempWords: any;
+  language!: string;
+  constructor(private _activatedRoute: ActivatedRoute) { }
 
   init() {
-
+    this.language = this._activatedRoute.snapshot.queryParamMap.get('lang') || 'en-US';
+    const languageTag = _.get(LANGUAGE_TAGS, this.language, 'en-US');
     this.recognition.interimResults = true;
-    this.recognition.lang = 'en-US';
+    this.recognition.lang = languageTag;
 
     this.recognition.addEventListener('result', (e: any) => {
       const transcript = Array.from(e.results)
