@@ -8,7 +8,8 @@ import * as _ from 'lodash';
 import * as moment from 'moment';
 import { LocalStorageService } from '../shared/services/storage/local-storage.service';
 import { ChatGptService } from '../shared/services/chat-gpt/chat-gpt.service';
-
+// @ts-ignore
+import Speech from 'speak-tts';
 @Component({
   selector: 'workflow-home',
   templateUrl: './home.component.html',
@@ -26,6 +27,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
   public storageKeyName!: string;
   private chatGptSubs!: Subscription;
   public chatSpinner = false;
+  speech: any;
   @ViewChild('scrollMe') private myScrollContainer!: ElementRef;
   constructor(private _formBuilder: FormBuilder,
     private _voiceRecognitionService: VoiceRecognitionService,
@@ -33,6 +35,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
     private _localStorageService: LocalStorageService,
     private _chatGptService: ChatGptService) {
     this._voiceRecognitionService.init();
+    this.speech = new Speech();
   }
   ngOnInit(): void {
     this.storageKeyName = moment().format('YYYY-MM-DD');
@@ -57,6 +60,28 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
       this.askChatGpt(message);
     }
     this.scrollToBottom();
+    if (this.speech.hasBrowserSupport()) { // returns a boolean
+      console.log("speech synthesis supported");
+      this.speech.init({
+        'volume': 1,
+        'lang': 'en-GB',
+        'rate': 1,
+        'pitch': 1,
+        'voice': 'Google UK English Male',
+        'splitSentences': true,
+        'listeners': {
+          'onvoiceschanged': (voices: any) => {
+            //console.log("Event voiceschanged", voices)
+          }
+        }
+      }).then((data: any) => {
+        // The "data" object contains the list of available voices and the voice synthesis params
+        console.log("Speech is ready, voices are available", data)
+      }).catch((e: any) => {
+        console.error("An error occured while initializing : ", e)
+      })
+    }
+
   }
   public emojiToggle() {
     this.emojiFlag = !this.emojiFlag;
@@ -134,6 +159,15 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
     } catch (err) {
       console.log(err);
     }
+  }
+  speak(text: string) {
+    this.speech.speak({
+      text
+    }).then(() => {
+      console.log("Success !")
+    }).catch((e: any) => {
+      console.error("An error occurred :", e);
+    })
   }
   ngOnDestroy(): void {
     this.speechToTextSubs.unsubscribe();
